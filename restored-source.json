@@ -1,0 +1,45 @@
+{
+  "scope": "Recovered original MLP cGAN and residual U-Net implementation; distinct from digit_models.py compact components.",
+  "files": [
+    {
+      "path": "model/diffusion.py",
+      "source_sha256": "5646cf9a4eb0a145f7261f94120477df62c0c2e96756d4dc414d1a6f6dd7aaa5"
+    },
+    {
+      "path": "model/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "model/cgan.py",
+      "source_sha256": "e8a37f2e3c17bc528f01afa7dfaf8bac5b6d870de6b05be6f80d0905aa534c8c"
+    },
+    {
+      "path": "training/train_diffusion.py",
+      "source_sha256": "336ed8b3f3a8bbd1ab799cdcbfcf83cf18efe35b19f757e2cfe8eeebb63acc06"
+    },
+    {
+      "path": "training/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "training/train_cgan.py",
+      "source_sha256": "17b4dd9b672cec4e1925a46e05f482d8358179082aaf5e1d77bc14a9548232a8"
+    },
+    {
+      "path": "utils/metrics.py",
+      "source_sha256": "8e4653c22720b94c40d6a703f1d65e9a452174973084aa1f85b0f85fe7303442"
+    },
+    {
+      "path": "utils/checkpoint.py",
+      "source_sha256": "d7f1e3f434fd35dcd0cc4f440dffb4a9fa1d6f0997f506f211121e12dcc78565"
+    },
+    {
+      "path": "utils/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "utils/visualize.py",
+      "source_sha256": "9ae57b02f8805bf54c26e2612acd556ddd354376946799bd1e5683d18dc5adc7"
+    }
+  ]
+}

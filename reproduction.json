@@ -1,0 +1,67 @@
+{
+  "repository": "conditional-handwriting-generation",
+  "profiles": {
+    "checks": {
+      "scope": "Offline behavioral regressions; not a fresh dataset benchmark",
+      "commands": [
+        [
+          "{python}",
+          "smoke_test.py"
+        ],
+        [
+          "{python}",
+          "test_restored_models.py"
+        ]
+      ]
+    },
+    "train-cgan": {
+      "scope": "Original MLP cGAN training on canonical MNIST; fresh50epoch run, not historical checkpoint evaluation",
+      "required_inputs": [
+        "mnist"
+      ],
+      "commands": [
+        [
+          "{python}",
+          "train.py",
+          "--data",
+          "{input:mnist}",
+          "--model",
+          "cgan",
+          "--epochs",
+          "50",
+          "--output",
+          "{output}/cgan"
+        ]
+      ]
+    },
+    "train-diffusion": {
+      "scope": "Original residual U-Net DDPM training on canonical MNIST;40epochs",
+      "required_inputs": [
+        "mnist"
+      ],
+      "commands": [
+        [
+          "{python}",
+          "train.py",
+          "--data",
+          "{input:mnist}",
+          "--model",
+          "diffusion",
+          "--epochs",
+          "40",
+          "--output",
+          "{output}/diffusion"
+        ]
+      ]
+    }
+  },
+  "version_packages": [
+    "numpy",
+    "torch",
+    "pandas",
+    "scikit-learn",
+    "gymnasium",
+    "pytest"
+  ],
+  "external_evidence_limits": "See BENCHMARKS.md and DATA.md. Passing contract checks does not certify historical accuracy, live providers, physical safety or business outcomes."
+}

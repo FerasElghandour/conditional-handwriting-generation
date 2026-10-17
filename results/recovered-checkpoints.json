@@ -1,0 +1,23 @@
+[
+  {
+    "path": "checkpoints/cgan_generator.pt",
+    "source_sha256": "14629f3221820c2e16323be73de5ba78d64003ad13de4240b1074143a12c8074",
+    "published_sha256": "66bf03f83c1c285d084e9353334c7813a6bd91446b2b6d75f9bfde6b662c760c",
+    "conversion": "Optimizer state removed for inference distribution. Model tensors and metadata unchanged.",
+    "completed_epochs": 50
+  },
+  {
+    "path": "checkpoints/cgan_discriminator.pt",
+    "source_sha256": "a4fe84076a29d6c9bd56f90bef18335ff9590730959fba18b027742c1a6ae209",
+    "published_sha256": "358908717ad8823f90025ebd4874d0e935d760fcf20171e36702a08c5fcbef06",
+    "conversion": "Optimizer state removed for inference distribution. Model tensors and metadata unchanged.",
+    "completed_epochs": 50
+  },
+  {
+    "path": "checkpoints/diffusion_unet.pt",
+    "source_sha256": "241d91dc7154e6420a52a43162011347961071d6810e12fb3c1ce12f282835f2",
+    "published_sha256": "37321d2ee3dc799980c918b2be456fe0d7949d5f2611bc21e731a12b2956eb14",
+    "conversion": "Optimizer state removed for inference distribution. Model tensors and metadata unchanged.",
+    "completed_epochs": 40
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "model": "cgan",
+  "architecture": "original MLP cGAN / residual U-Net, not compact digit_models.py",
+  "seed": 42,
+  "train_rows_available": 512,
+  "rows_per_epoch": 512,
+  "drop_last": true,
+  "test_used_for_training": false,
+  "data_sha256": "731c5ac602752760c8e48fbffcf8c3b850d9dc2a2aedcf2cc48468fc17b673d1",
+  "torch": "2.14.1",
+  "history": [
+    {
+      "epoch": 1,
+      "g_loss": 0.678889587521553,
+      "d_loss": 0.6304894983768463,
+      "examples": 512,
+      "seconds": 0.045691583000007086
+    }
+  ]
+}

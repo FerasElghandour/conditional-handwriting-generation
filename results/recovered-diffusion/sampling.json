@@ -1,0 +1,17 @@
+{
+  "model": "diffusion",
+  "samples": 20,
+  "seed": 42,
+  "checkpoint_sha256": "37321d2ee3dc799980c918b2be456fe0d7949d5f2611bc21e731a12b2956eb14",
+  "shape": [
+    20,
+    1,
+    28,
+    28
+  ],
+  "finite": true,
+  "range": [
+    -0.999937117099762,
+    0.999937117099762
+  ]
+}

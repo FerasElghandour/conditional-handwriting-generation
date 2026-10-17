@@ -8,6 +8,23 @@ Standalone conditioned generator/discriminator components, a conditioned noise p
 
 ![Implementation mechanism: Class embedding and latent noise → Project to 64 by 7 by 7 → Transposed convolutions → 28 by 28 conditioned output → Discriminator score for generated batch](assets/mechanism.svg)
 
+
+
+## Train and sample generative models
+
+Complete original **MLP cGAN** and **residual U-Net DDPM** training/sampling paths are restored with strictly compatible retained checkpoints. A fresh classifier trained only on 10,000 cGAN samples reaches **93.03% on 10,000 real MNIST test images** under the declared 20-epoch utility protocol.
+
+[Commands, artifacts and benchmark scope](BENCHMARKS.md) · [Versioned profiles](reproduction.json)
+
+Recovered cGAN checkpoint, class-conditioned rows0–9:
+
+![Actual class-conditioned samples from the recovered cGAN](results/recovered-cgan/grid.png)
+
+Recovered residual U-Net DDPM, same class order:
+
+![Actual class-conditioned samples from the recovered DDPM](results/recovered-diffusion/grid.png)
+
+
 ## Try a small example
 
 Randomly initialized components produce a conditioned batch and discriminator scores. Shapes and output bounds do not establish generated-image quality or reproduce the historical FID study.

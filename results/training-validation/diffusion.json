@@ -1,0 +1,19 @@
+{
+  "model": "diffusion",
+  "architecture": "original MLP cGAN / residual U-Net, not compact digit_models.py",
+  "seed": 42,
+  "train_rows_available": 256,
+  "rows_per_epoch": 256,
+  "drop_last": true,
+  "test_used_for_training": false,
+  "data_sha256": "731c5ac602752760c8e48fbffcf8c3b850d9dc2a2aedcf2cc48468fc17b673d1",
+  "torch": "2.14.1",
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 1.1786993145942688,
+      "examples": 256,
+      "seconds": 1.8600600419995317
+    }
+  ]
+}
