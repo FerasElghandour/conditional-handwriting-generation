@@ -1,18 +1,29 @@
 # Conditional Handwriting Generation
 
-**Feras Elghandour** · Technical case study
-
 Explore the quality–latency trade-off between adversarial and diffusion-based digit generation.
 
 ## Implementation
 
 Standalone conditioned generator/discriminator components, a conditioned noise predictor, and a cosine-schedule diffusion objective.
 
-```mermaid
-flowchart LR
-    A[Validated inputs] --> B[Core implementation]
-    B --> C[Behavior and error checks]
-    C --> D[Inspectable outcome]
+![Implementation mechanism: Class embedding and latent noise → Project to 64 by 7 by 7 → Transposed convolutions → 28 by 28 conditioned output → Discriminator score for generated batch](assets/mechanism.svg)
+
+## Try a small example
+
+Randomly initialized components produce a conditioned batch and discriminator scores. Shapes and output bounds do not establish generated-image quality or reproduce the historical FID study.
+
+After the local setup below, run from the repository root:
+
+```sh
+python examples/quickstart.py
+```
+
+The [example source](examples/quickstart.py), [captured output](examples/expected-output.txt) and [execution record](examples/environment.json) keep this demonstration inspectable. Floating-point values may vary with library versions.
+
+Observed output from this run:
+
+```text
+{'images': [4, 1, 28, 28], 'scores': [4, 1], 'bounded': True}
 ```
 
 ## Evidence and results
@@ -32,7 +43,7 @@ python -m pip install -r requirements.txt
 python smoke_test.py
 ```
 
-See [DATA.md](DATA.md) for input contracts and [VALIDATION.md](VALIDATION.md) for the verification scope. The modules expose small APIs that can be integrated into a larger workflow.
+See [DATA.md](DATA.md) for input contracts and [VALIDATION.md](VALIDATION.md) for the verification scope. 
 
 ## Practical relevance and limitations
 
