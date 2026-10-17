@@ -1,0 +1,13 @@
+{
+  "model": "diffusion",
+  "seed": 202,
+  "source_checkpoint_sha256": "54f988245fa7b1b5b961a08b0919b34af2fb0c335f00192f03668550e6a1017e",
+  "portable_checkpoint_sha256": "fadc10d2ac9b52e301d91e991b712940edecdfd0ee58d8a618f293573a4825e6",
+  "all_model_tensors_exact": true,
+  "cpu_forward_fixture_exact": true,
+  "fixture_batch": 4,
+  "torch": "2.14.1",
+  "classifier_checkpoint_sha256": "afbed4b7b57ac1887069546ae7a228c5ca3fc67f0aed5a5185a1c50889287295",
+  "test_predictions_sha256": "cf68226fdd88ffa85a8bcd2b1db1a2aa0d963ca22276c72891fabb3a70d79cd9",
+  "limits": "Inference export, not resumable training state. No bitwise MPS sample-regeneration guarantee."
+}

@@ -1,120 +1,61 @@
-# Reproduction and benchmark scope
+# Training and benchmark reproduction
 
-A fresh **50-epoch MLP cGAN** run produces samples that train a classifier to **93.28% accuracy on 10,000 real MNIST test images**. The classifier sees only 10,000 synthetic training images and trains for 20 epochs. Original MLP cGAN and residual U-Net DDPM training/sampling paths also retain compatible recovered checkpoints.
+The current reference is the [complete three-seed cGAN/DDPM comparison](results/comparison-v1/RESULTS.md): six freshly trained generators, fixed synthetic-only classifiers, per-class diagnostics, fresh FID, source fingerprints and portable inference exports. Every declared seed is reported.
 
-## Execute a recorded profile
+## Reference commands
+
+Use Python 3.14.3 on Mac ARM64 with `requirements-reference-macos.txt`. It is an observed pinned platform-specific closure, not a universal accelerator lock. The earlier `environment-validation.json` records the separately validated reference setup; the new campaign records its own runtime and exact source snapshot.
+
+Acquire [canonical MNIST](https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz) under its original terms. Expected SHA-256: `731c5ac602752760c8e48fbffcf8c3b850d9dc2a2aedcf2cc48468fc17b673d1`.
 
 ```sh
-python run_reproduction.py --profile checks --output reproduced/checks
+python comparison.py --data /path/to/mnist.npz --out runs/comparison
 ```
 
-Use a new output directory for each run. The driver writes command logs, source/input SHA-256 values, versions and an explicit outcome. It does not silently download data or turn generated fixtures into dataset-performance claims.
+The protocol runs seeds 101/202/303: cGAN 50 epochs, batch 128, CPU; DDPM 40 epochs, batch 512, MPS. Every epoch uses 59,904 training rows. Sampling uses 10,000 balanced labels, MPS batches of 128 and explicit chunk seeds. Each classifier trains for 20 epochs only on synthetic data; its seed matches between generator pairs. See `COMPARISON_PROTOCOL.json`. The generic `train-diffusion` profile is a separate CPU/batch-128/seed-42 configuration; it is not the recorded MPS comparison budget.
 
-| Profile | Actual scope | Required inputs |
-|---|---|---|
-| `checks` | Offline behavioral regressions; not a fresh dataset benchmark | None |
-| `train-cgan` | Full original MLP cGAN training on canonical MNIST: 50 epochs, seed 42, batch 128, CPU; completed fresh in this release | mnist |
-| `train-diffusion` | Original residual U-Net DDPM training on canonical MNIST; 40 epochs | mnist |
-| `evaluate-fresh-cgan` | Published fresh 50-epoch cGAN weights; 10,000 synthetic samples; 20-epoch synthetic-only classifier; 10,000 real test images; no generator retraining | mnist |
-| `resume-cgan` | Continue a compatible CPU training-state session to a total of 50 epochs; identical data/batch/seed/runtime required | mnist, session |
-
-Supply named paths with `--input name=/absolute/path`. Exact commands are versioned in [reproduction.json](reproduction.json); direct training commands and preparation contracts are below.
-
-The `checks` profile also strictly loads the three recovered original architectures and checks finite conditional forward/backward paths through them.
-
-## Evidence boundary
-
-These original architectures are separate from the compact digit_models.py components. Retained generator weights were recovered. The cGAN now also has a complete fresh 50-epoch run; DDPM has only short fresh training checks. Historical FID was not remeasured.
-
-Keep input acquisition and source credits in [DATA.md](DATA.md). Historical results, new reference runs and small contract fixtures have separate evidential scope.
-
-## Direct commands and inputs
-
-Download the [canonical MNIST NPZ](https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz). Its SHA-256 is checked before training. Both paths consume training images only.
+Direct single-run examples (different seeds from the paired campaign):
 
 ```sh
-python train.py --data mnist.npz --model cgan --epochs 50 --output runs/cgan
-python train.py --data mnist.npz --model diffusion --epochs 40 --output runs/diffusion
+python train.py --data mnist.npz --model cgan --epochs 50 --batch-size 128 --seed 42 --device cpu --output runs/cgan
+python train.py --data mnist.npz --model diffusion --epochs 40 --batch-size 512 --seed 42 --device mps --output runs/diffusion
 python sample.py --model cgan --checkpoint runs/cgan/cgan_generator_epochfinal.pt --samples 10000 --seed 42 --output runs/cgan-samples
-python evaluate.py --data mnist.npz --samples runs/cgan-samples/samples.npz --epochs 20 --output runs/utility
-python sample.py --model diffusion --checkpoint runs/diffusion/diffusion_unet_epochfinal.pt --samples 20 --seed 42 --output runs/diffusion-samples
+python evaluate.py --data mnist.npz --samples runs/cgan-samples/samples.npz --epochs 20 --seed 2026 --output runs/utility
 ```
 
-The cGAN 50-epoch command has now completed on all 60,000 input training rows (59,904 rows per epoch with drop_last). Fresh DDPM training was checked for one epoch on 256 images; its full 40-epoch command has not been rerun. The 93.03% utility result used recovered cGAN weights and a fresh 20-epoch classifier. Optional `--fid` additionally requires `requirements-fid.txt`, feature-extractor weights and at least 2,049 generated examples; FID was not rerun.
+Use `comparison.py` for the recorded batched sampling route; `sample.py` is a separate direct convenience path. An existing campaign refuses source/protocol changes. Incomplete training requires explicit continuation in another folder; no partial run is silently reported as complete.
 
+## Secondary FID reference
 
-
-## Pinned local reference installation
-
-[requirements-reference-macos.txt](requirements-reference-macos.txt) pins the installed runtime/test dependency closure for Python 3.14.3 on macOS ARM64. It accompanies the observed environment record. A new empty Python3.14.3 macOS environment installed these pinned dependencies, passed `pip check`, and passed all eight offline repository check profiles. [The validation record](environment-validation.json) binds the source revisions, Python source hashes, versions and outcomes. This is a platform-specific reference, not a Linux/CUDA lock or a repetition of every full dataset benchmark. The GitHub checks use their separately declared Linux environment.
+In a separate Python 3.11.15 Mac ARM64 environment install `requirements-fid-reference-macos.txt`, then run:
 
 ```sh
-python3.14 -m venv .venv-reference
-.venv-reference/bin/python -m pip install -r requirements-reference-macos.txt
+PYTORCH_ENABLE_MPS_FALLBACK=1 python fid_comparison.py --data mnist.npz --campaign runs/comparison --out runs/fid
 ```
 
-Use the recorded exact Python patch version when comparing numerical results. Notebook tooling and optional FID dependencies are outside this runtime/test snapshot.
+This explicitly permits CPU fallback for antialiased resize, qualifies eight CPU/MPS feature vectors before scoring, reuses one fixed real reference and records feature-weight hashes. `--weights` can supply the official Torch-Fidelity Inception file locally. Do not compare the new 5,000/5,000-image FID values directly with the archived experiment as if the protocols were identical. Natural RGB Inception features have limitations on MNIST, and n=3 is descriptive.
 
-## Fresh cGAN end-to-end reference
+## Continue training
 
-A new 50-epoch CPU run (seed 42, batch 128) completed in 148.08 seconds summed over training epochs on an Apple M2 Max. Every epoch uses 59,904 of 60,000 training rows because the final incomplete batch is dropped. A new classifier (seed 2026) trained for 20 epochs on 10,000 synthetic samples reaches **93.28% (9,328/10,000)** on the real MNIST test set. No real test images train either model.
+The `resume-cgan` profile and `train.py --resume` retain models, optimizers, completed epochs, history and random/data-loader state under an identical configuration/runtime contract. `--epochs` is the total target, and the output directory must be new. Model-only inference exports cannot resume. [MPS_REPRODUCIBILITY.md](MPS_REPRODUCIBILITY.md) documents the failed bitwise full-data MPS check; restored state does not guarantee exact accelerator continuation.
 
-| Generator source | Synthetic classifier train | Real test accuracy | Scope |
-|---|---:|---:|---|
-| Fresh 50-epoch cGAN | 10,000 images, 20 epochs | 93.28% | Complete fresh generator and classifier training |
-| Recovered cGAN weights | 10,000 images, 20 epochs | 93.03% | Recovered generator; fresh classifier |
-
-The difference is one observed run, not evidence of statistical superiority. FID and historical T4 generation latency were not remeasured. Full DDPM training remains unreplicated.
-
-[Protocol and source revision](results/fresh-cgan/protocol.json) · [Training history](results/fresh-cgan/training.json) · [Utility metrics and confusion matrix](results/fresh-cgan/utility.json) · [Actual preview](results/fresh-cgan/grid.png)
-
-The portable inference checkpoint is `checkpoints/cgan_fresh50.pt`. It removes optimizer state while retaining identical model tensors and metadata; reload reproduced all 10,000 generated sample arrays exactly. Full continuation requires a training-state session, never this inference export.
+## Offline checks and profiles
 
 ```sh
-python run_reproduction.py --profile evaluate-fresh-cgan --input mnist=/path/to/mnist.npz --output runs/recheck-fresh
+python run_reproduction.py --profile checks --output runs/checks
 ```
 
-## Recorded command definitions
+`reproduction.json` declares exact commands for checks, generic single-model training, the earlier fresh-cGAN evaluation, CPU continuation and the current paired comparison. The checks are small numerical fixtures, not MNIST performance benchmarks. The reproduction driver records source/input fingerprints and explicit outcomes.
 
-### checks
+## Earlier records retained
 
-Offline behavioral regressions; not a fresh dataset benchmark
+| Evidence | Result | Boundary |
+|---|---|---|
+| Earlier fresh cGAN, generator seed 42 / classifier seed 2026 | 93.28% real-test accuracy | One 50-epoch CPU generator and one classifier; `results/fresh-cgan/` |
+| Recovered cGAN weights, fresh classifier | 93.03% real-test accuracy | Recovered generator; `results/recovered-cgan/` |
+| Archived cGAN / DDPM study | FID 51.94 / 7.28; utility 92.97% / 97.25% | Saved original experiment |
+| Archived T4 sampling, 10,000 images | 0.269 / 255.235 seconds | Historical runtime; not repeated on a T4 |
 
-```text
-{python} smoke_test.py
-{python} test_restored_models.py
-{python} test_resume.py
-```
+The current campaign newly completes full DDPM training for three seeds. It does not repeat the exact archived training/feature/timing configuration. The earlier portable `checkpoints/cgan_fresh50.pt` retains its separately recorded export verification; the new six exports have their own verification and source/model fingerprints.
 
-### train-cgan
-
-Full original MLP cGAN training on canonical MNIST: 50 epochs, seed 42, batch 128, CPU; completed fresh in this release
-
-```text
-{python} train.py --data {input:mnist} --model cgan --epochs 50 --output {output}/cgan --batch-size 128 --seed 42 --device cpu
-```
-
-### train-diffusion
-
-Original residual U-Net DDPM training on canonical MNIST; 40 epochs
-
-```text
-{python} train.py --data {input:mnist} --model diffusion --epochs 40 --output {output}/diffusion --batch-size 128 --seed 42 --device cpu
-```
-
-### evaluate-fresh-cgan
-
-Published fresh 50-epoch cGAN weights; 10,000 synthetic samples; 20-epoch synthetic-only classifier; 10,000 real test images; no generator retraining
-
-```text
-{python} sample.py --model cgan --checkpoint checkpoints/cgan_fresh50.pt --samples 10000 --seed 42 --output {output}/samples
-{python} evaluate.py --data {input:mnist} --samples {output}/samples/samples.npz --epochs 20 --output {output}/utility
-```
-
-### resume-cgan
-
-Continue a compatible CPU training-state session to a total of 50 epochs; identical data/batch/seed/runtime required
-
-```text
-{python} train.py --data {input:mnist} --model cgan --epochs 50 --batch-size 128 --seed 42 --device cpu --resume {input:session} --output {output}/continued
-```
+Source acquisition and reuse boundaries remain in [DATA.md](DATA.md) and [LICENSING.md](LICENSING.md).

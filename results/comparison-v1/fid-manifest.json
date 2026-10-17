@@ -1,0 +1,44 @@
+{
+  "protocol": {
+    "name": "fresh-mnist-inception-fid-v2",
+    "declared_date": "2026-10-17",
+    "role": "Secondary image-quality analysis of all six fixed-budget campaign generators, planned before inspecting these FID values; no model or seed selection from FID",
+    "real_samples": 5000,
+    "fake_samples": 5000,
+    "real_selection": "first 5000 canonical MNIST test images in archive order",
+    "fake_selection": "first 5000 of each campaign's 10000 balanced class-conditioned samples",
+    "feature": "Torch-Fidelity Inception-v3 2048 pretrained features via TorchMetrics FrechetInceptionDistance",
+    "preprocessing": "grayscale repeated to RGB; real uint8/255, fake clamp(-1,1)/2+0.5; TorchMetrics normalize=True uint8 conversion and internal resize",
+    "compute": "MPS float32 convolutions with explicitly enabled CPU fallback for unsupported antialiased resize; float64 accumulated moments and FID computation on CPU; cached real moments reused identically",
+    "technical_amendment": "CPU-only extraction was superseded after throughput qualification and before any FID scores were produced. Eight real-image feature vectors must match CPU within declared tolerance before GPU scoring starts.",
+    "limits": "This is a new protocol, not a reproduction of archived FID or T4 latency. Inception features were developed for natural RGB images and have limitations for MNIST. Finite-sample FID is biased and three seeds support descriptive comparisons only. Generator training budgets/devices differ, so this is not a compute-matched efficiency result."
+  },
+  "source_sha256": {
+    "fid_comparison.py": "c569a92beb72a74eb049ee62a0ea9e69083d54354e1701f519fbd1cd241443a8",
+    "FID_PROTOCOL.json": "8331e1bceab61d279020ad57da2e6213741ced355bb51941935327d0a75f46f5"
+  },
+  "campaign_manifest_sha256": "1c60fbb5cdbcba769d776d3a4ced0b576d0ca32244685ac14da12982037f93ef",
+  "data_sha256": "731c5ac602752760c8e48fbffcf8c3b850d9dc2a2aedcf2cc48468fc17b673d1",
+  "python": "3.11.15",
+  "versions": {
+    "torch": "2.5.1",
+    "torchvision": "0.20.1",
+    "torchmetrics": "1.8.2",
+    "torch-fidelity": "0.3.0",
+    "numpy": "1.26.3",
+    "scipy": "1.16.3"
+  },
+  "status": "completed",
+  "started_unix": 1792276542.541394,
+  "feature_qualification": {
+    "real_images": 8,
+    "absolute_tolerance": 0.002,
+    "relative_tolerance": 0.002,
+    "max_absolute_difference": 5.4836273193359375e-06,
+    "passed": true
+  },
+  "feature_weight_sha256": {
+    "weights-inception-2015-12-05-6726825d.pth": "6726825d0af5f729cebd5821db510b11b1cfad8faad88a03f1befd49fb9129b2"
+  },
+  "finished_unix": 1792279451.982487
+}

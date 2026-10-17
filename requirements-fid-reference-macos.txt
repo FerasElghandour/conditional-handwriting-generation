@@ -1,0 +1,20 @@
+# Observed dependency closure for Python 3.11.15, Darwin arm64.
+# Platform-specific snapshot; CUDA/Linux and optional dependencies have separate terms.
+filelock==4.2.1
+fsspec==2026.9.0
+jinja2==3.1.6
+lightning-utilities==0.15.3
+markupsafe==3.0.4
+mpmath==1.3.0
+networkx==3.6.1
+numpy==1.26.3
+packaging==26.3
+pillow==13.0.0
+scipy==1.16.3
+sympy==1.13.1
+torch==2.5.1
+torch-fidelity==0.3.0
+torchmetrics==1.8.2
+torchvision==0.20.1
+tqdm==4.70.1
+typing-extensions==4.16.0

@@ -1,0 +1,28 @@
+{
+  "model": "diffusion",
+  "samples": 10000,
+  "batch_size": 128,
+  "seed": 10202,
+  "chunk_seed": "seed+first output index",
+  "device": "mps",
+  "seconds": 366.35605137500534,
+  "checkpoint_sha256": "54f988245fa7b1b5b961a08b0919b34af2fb0c335f00192f03668550e6a1017e",
+  "samples_sha256": "e002aa5923ccaa2c4bdf80cdc74975ea8553113fc75acc665c2319a622bc2519",
+  "class_counts": [
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000
+  ],
+  "range": [
+    -0.999937117099762,
+    0.999937117099762
+  ],
+  "torch": "2.14.1"
+}

@@ -1,0 +1,14 @@
+{
+ "name":"fresh-mnist-inception-fid-v2",
+ "declared_date":"2026-10-17",
+ "role":"Secondary image-quality analysis of all six fixed-budget campaign generators, planned before inspecting these FID values; no model or seed selection from FID",
+ "real_samples":5000,
+ "fake_samples":5000,
+ "real_selection":"first 5000 canonical MNIST test images in archive order",
+ "fake_selection":"first 5000 of each campaign's 10000 balanced class-conditioned samples",
+ "feature":"Torch-Fidelity Inception-v3 2048 pretrained features via TorchMetrics FrechetInceptionDistance",
+ "preprocessing":"grayscale repeated to RGB; real uint8/255, fake clamp(-1,1)/2+0.5; TorchMetrics normalize=True uint8 conversion and internal resize",
+ "compute":"MPS float32 convolutions with explicitly enabled CPU fallback for unsupported antialiased resize; float64 accumulated moments and FID computation on CPU; cached real moments reused identically",
+ "technical_amendment":"CPU-only extraction was superseded after throughput qualification and before any FID scores were produced. Eight real-image feature vectors must match CPU within declared tolerance before GPU scoring starts.",
+ "limits":"This is a new protocol, not a reproduction of archived FID or T4 latency. Inception features were developed for natural RGB images and have limitations for MNIST. Finite-sample FID is biased and three seeds support descriptive comparisons only. Generator training budgets/devices differ, so this is not a compute-matched efficiency result."
+}

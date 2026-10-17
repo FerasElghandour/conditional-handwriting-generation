@@ -1,0 +1,56 @@
+[
+  {
+    "model": "cgan",
+    "seed": 101,
+    "accuracy": 0.9524,
+    "fid_2048": 46.433815002441406,
+    "training_epoch_seconds_sum": 170.5532062509883,
+    "sampling_seconds": 2.775695000000269,
+    "optimizer_steps": 23400
+  },
+  {
+    "model": "cgan",
+    "seed": 202,
+    "accuracy": 0.8165,
+    "fid_2048": 97.4300765991211,
+    "training_epoch_seconds_sum": 173.47093571000005,
+    "sampling_seconds": 2.186351875003311,
+    "optimizer_steps": 23400
+  },
+  {
+    "model": "cgan",
+    "seed": 303,
+    "accuracy": 0.8287,
+    "fid_2048": 99.98998260498047,
+    "training_epoch_seconds_sum": 185.195026166999,
+    "sampling_seconds": 2.5299725420009054,
+    "optimizer_steps": 23400
+  },
+  {
+    "model": "diffusion",
+    "seed": 101,
+    "accuracy": 0.9624,
+    "fid_2048": 18.111024856567383,
+    "training_epoch_seconds_sum": 1214.9099509590087,
+    "sampling_seconds": 350.6103560000047,
+    "optimizer_steps": 4680
+  },
+  {
+    "model": "diffusion",
+    "seed": 202,
+    "accuracy": 0.9581,
+    "fid_2048": 16.05340576171875,
+    "training_epoch_seconds_sum": 1256.9887394149991,
+    "sampling_seconds": 366.35605137500534,
+    "optimizer_steps": 4680
+  },
+  {
+    "model": "diffusion",
+    "seed": 303,
+    "accuracy": 0.9652,
+    "fid_2048": 17.914390563964844,
+    "training_epoch_seconds_sum": 1190.9111987070064,
+    "sampling_seconds": 356.33175233400107,
+    "optimizer_steps": 4680
+  }
+]

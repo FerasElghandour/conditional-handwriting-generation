@@ -1,0 +1,15 @@
+{
+  "name": "mnist-generative-comparison-v1",
+  "declared_date": "2026-10-17",
+  "source_base_commit": "ed98aae1b23b88288002d21ef21f443b814435c5",
+  "seeds": [101,202,303],
+  "models": {"cgan":{"epochs":50,"batch_size":128,"device":"cpu"},"diffusion":{"epochs":40,"batch_size":512,"device":"mps"}},
+  "data_sha256": "731c5ac602752760c8e48fbffcf8c3b850d9dc2a2aedcf2cc48468fc17b673d1",
+  "data": "canonical MNIST: 60000 training and 10000 test images; final partial generator batches dropped",
+  "sampling": {"count":10000,"batch_size":128,"device":"mps","labels":"balanced cyclic 0 through 9","seed_offset":10000,"chunk_seed":"sampling seed plus first output index"},
+  "classifier": {"epochs":20,"device":"cpu","seed_offset":20000,"training":"10000 synthetic images only; same classifier initialization and batch-order seed for each paired generator seed"},
+  "selection": "final fixed-budget generator checkpoint; no test-based model, epoch or seed selection",
+  "endpoint": "synthetic-only classifier accuracy on the fixed real MNIST test split; per-class recall and confusion matrices",
+  "analysis": "report all three complete pipeline seed pairs, arithmetic mean, median, sample SD and paired differences; no significance or universal superiority claim from n=3",
+  "limits": "Locally frozen before new training. Same data, sample count and classifier protocol; generator epochs, batch sizes, optimizer rules, devices and compute budgets differ and are reported. This is not a compute-matched efficiency comparison. Test split and earlier results were known before this follow-up. Inception FID and archived T4 latency are outside this campaign."
+}

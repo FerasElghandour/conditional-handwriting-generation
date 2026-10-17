@@ -1,0 +1,80 @@
+[
+  {
+    "model": "cgan",
+    "seed": 101,
+    "source_checkpoint_sha256": "5436e0b64a34465c2f893ac2a399c2feb2e23d6ae8987df52b3f6f2c56696d11",
+    "portable_checkpoint_sha256": "44ce38534e7c4343334bb4c762fc59b3fee7b86d913c90feef6c3ea7e468a33c",
+    "all_model_tensors_exact": true,
+    "cpu_forward_fixture_exact": true,
+    "fixture_batch": 4,
+    "torch": "2.14.1",
+    "classifier_checkpoint_sha256": "f0a4f2d8c63838f37205e5f9637c12b5c3d76f9b86744b698330b0daa0b15c5b",
+    "test_predictions_sha256": "daf78da51253368faad42acf0b3619edf76b6264a638f1fbf73060d328438524",
+    "limits": "Inference export, not resumable training state. No bitwise MPS sample-regeneration guarantee."
+  },
+  {
+    "model": "cgan",
+    "seed": 202,
+    "source_checkpoint_sha256": "d8636b85304cfb0851505d39359cacc7a29b0836f542677d8fd3de424594fd21",
+    "portable_checkpoint_sha256": "5900567529fccac4e25a2392999f3da44e5985f6a5c1fc63d087456508f5e768",
+    "all_model_tensors_exact": true,
+    "cpu_forward_fixture_exact": true,
+    "fixture_batch": 4,
+    "torch": "2.14.1",
+    "classifier_checkpoint_sha256": "be973ae34e9134aaf0ba52474a6231bb0a282198271e905ea56cfd38c961a8fa",
+    "test_predictions_sha256": "9591149d4026e18cad72d1e6a584bc7fa97a8ba6ac9f542beb8e4534f9bb4c83",
+    "limits": "Inference export, not resumable training state. No bitwise MPS sample-regeneration guarantee."
+  },
+  {
+    "model": "cgan",
+    "seed": 303,
+    "source_checkpoint_sha256": "241a46feacd30125bcf57aacd5b3d997fd57e406add1aad7fe0ae009cb74b3b6",
+    "portable_checkpoint_sha256": "ca510e0ede06cd127ee66e89f0fab78d36ca2c3731d849ce50f3e6de5030f424",
+    "all_model_tensors_exact": true,
+    "cpu_forward_fixture_exact": true,
+    "fixture_batch": 4,
+    "torch": "2.14.1",
+    "classifier_checkpoint_sha256": "5a739b50e71ecc6836bb78322a046d40474e7b877e78b88101b9d22b24446dc3",
+    "test_predictions_sha256": "c500683a44d0060391a717adf39dde889953fc28e4b513a6d8744e69bd9173d3",
+    "limits": "Inference export, not resumable training state. No bitwise MPS sample-regeneration guarantee."
+  },
+  {
+    "model": "diffusion",
+    "seed": 101,
+    "source_checkpoint_sha256": "877050929ea511686101f12ddfc92f2f1b637ad17c4ff7b85a41ec39e7f5474d",
+    "portable_checkpoint_sha256": "902fdb2010a597f7795d784fa9e2b6ebcc3e2d6fb62010ca233da4e167af3a66",
+    "all_model_tensors_exact": true,
+    "cpu_forward_fixture_exact": true,
+    "fixture_batch": 4,
+    "torch": "2.14.1",
+    "classifier_checkpoint_sha256": "3c03e5d03f799946755e6eb0c85022fb60f0da9defa601a9160eccb7c495773e",
+    "test_predictions_sha256": "5595e6c897b95f3affb20e578a55fbd18422c55d9ab4b0e5463625a5359072c1",
+    "limits": "Inference export, not resumable training state. No bitwise MPS sample-regeneration guarantee."
+  },
+  {
+    "model": "diffusion",
+    "seed": 202,
+    "source_checkpoint_sha256": "54f988245fa7b1b5b961a08b0919b34af2fb0c335f00192f03668550e6a1017e",
+    "portable_checkpoint_sha256": "fadc10d2ac9b52e301d91e991b712940edecdfd0ee58d8a618f293573a4825e6",
+    "all_model_tensors_exact": true,
+    "cpu_forward_fixture_exact": true,
+    "fixture_batch": 4,
+    "torch": "2.14.1",
+    "classifier_checkpoint_sha256": "afbed4b7b57ac1887069546ae7a228c5ca3fc67f0aed5a5185a1c50889287295",
+    "test_predictions_sha256": "cf68226fdd88ffa85a8bcd2b1db1a2aa0d963ca22276c72891fabb3a70d79cd9",
+    "limits": "Inference export, not resumable training state. No bitwise MPS sample-regeneration guarantee."
+  },
+  {
+    "model": "diffusion",
+    "seed": 303,
+    "source_checkpoint_sha256": "6bb5626d6acdc77df25512ca286c954101c5f202792defc16876f29e0471ef99",
+    "portable_checkpoint_sha256": "abd789e30e180401dc999f8e48dc1c408051be8f1bfe6db2bbcd470d33d07c87",
+    "all_model_tensors_exact": true,
+    "cpu_forward_fixture_exact": true,
+    "fixture_batch": 4,
+    "torch": "2.14.1",
+    "classifier_checkpoint_sha256": "855648c592cd11db3dcc843f2d4003be3c0d55f02b4ec108e8f72ef9c518efef",
+    "test_predictions_sha256": "16bad5edc8c03eb6e824cbe724e1d9d518fb16641fbe46cc8f1a57ab573539ab",
+    "limits": "Inference export, not resumable training state. No bitwise MPS sample-regeneration guarantee."
+  }
+]

@@ -1,90 +1,70 @@
 # Conditional Handwriting Generation
 
-Explore the quality–latency trade-off between adversarial and diffusion-based digit generation.
+Train an MLP conditional GAN and a class-conditioned residual U-Net diffusion model, then inspect what their synthetic digits teach a classifier.
 
-## Implementation
+![MLP cGAN: noise and label embeddings enter fully connected generator layers; the discriminator scores conditioned real and generated digits](assets/mechanism.svg)
 
-The headline cGAN uses fully connected layers with learned class embeddings. The second training path uses a residual U-Net DDPM. Compact convolutional examples in `digit_models.py` are separate implementations and do not produce the headline cGAN result.
+## Fresh training: every seed visible
 
-![MLP cGAN: noise and label embedding enter fully connected generator layers; the discriminator scores conditioned real and generated digits](assets/mechanism.svg)
+**Six complete generator runs** on MNIST: three 50-epoch cGANs and three 40-epoch DDPMs, followed by 10,000 generated images and a 20-epoch synthetic-only classifier for each. Mean real-test accuracy ± sample SD across three pipeline seeds: **cGAN 86.59% ± 7.52 pp**, **DDPM 96.19% ± 0.36 pp**.
 
+![Every seed's real-test utility and fresh Inception FID](results/comparison-v1/paired-results.png)
 
+Training budgets and devices differ, so this is not a compute-matched efficiency claim. Three seed pairs are descriptive. [All results, budgets, per-class diagnostics and limitations](results/comparison-v1/RESULTS.md).
 
-## Train and sample generative models
+Actual first 100 generated samples for seed 101, columns 0–9:
 
-A fresh **50-epoch MLP cGAN** run produces samples that train a classifier to **93.28% accuracy on 10,000 real MNIST test images**. The classifier sees only 10,000 synthetic training images and trains for 20 epochs. Original MLP cGAN and residual U-Net DDPM training/sampling paths also retain compatible recovered checkpoints.
+MLP cGAN:
 
-![Actual samples from the fresh 50-epoch cGAN; columns correspond to digits 0–9](results/fresh-cgan/grid.png)
+![Actual cGAN seed-101 samples](results/comparison-v1/cgan-101/grid.png)
 
-[Fresh training, utility metrics and checkpoint provenance](results/fresh-cgan/protocol.json). One generator seed and one classifier seed do not establish superiority. The separate recovered-cGAN utility result remains **93.03%**.
+Residual U-Net DDPM:
 
-[Commands, artifacts and benchmark scope](BENCHMARKS.md) · [Versioned profiles](reproduction.json)
+![Actual DDPM seed-101 samples](results/comparison-v1/diffusion-101/grid.png)
 
-Recovered cGAN checkpoint, class-conditioned columns 0–9:
+All three seeds' grids, histories, confusion matrices, portable generator/classifier weights and exact executed source are in [comparison-v1](results/comparison-v1). The cGAN mechanism above uses fully connected layers; the compact convolutional `digit_models.py` examples are a separate implementation.
 
-![Actual class-conditioned samples from the recovered cGAN](results/recovered-cgan/grid.png)
+## Train and evaluate
 
-Recovered residual U-Net DDPM, same class order:
+Python 3.14.3 and the [pinned Mac reference](requirements-reference-macos.txt) describe the recorded training environment. Acquire the canonical MNIST archive as documented in [DATA.md](DATA.md); the trainer checks its hash.
 
-![Actual class-conditioned samples from the recovered DDPM](results/recovered-diffusion/grid.png)
+```sh
+python -m pip install -r requirements-reference-macos.txt
+python comparison.py --data /path/to/mnist.npz --out runs/comparison
+python verify_comparison.py --data /path/to/mnist.npz --results results/comparison-v1
+```
 
+This launches the fixed six-run protocol on CPU and Apple Silicon MPS. [Direct commands, fresh FID and archived experiments](BENCHMARKS.md) · [versioned profiles](reproduction.json).
 
 ## Try a small example
-
-Randomly initialized components produce a conditioned batch and discriminator scores. Shapes and output bounds do not establish generated-image quality or reproduce the historical FID study.
-
-After the local setup below, run from the repository root:
 
 ```sh
 python examples/quickstart.py
 ```
 
-The [example source](examples/quickstart.py), [captured output](examples/expected-output.txt) and [execution record](examples/environment.json) keep this demonstration inspectable. Floating-point values may vary with library versions.
+The randomly initialized example produces a conditioned batch `[4, 1, 28, 28]`, discriminator scores `[4, 1]`, and bounded outputs. [Observed output](examples/expected-output.txt). It checks an interface, not sample quality.
 
-Observed output from this run:
-
-```text
-{'images': [4, 1, 28, 28], 'scores': [4, 1], 'bounded': True}
-```
-
-## Evidence and results
-
-The completed MNIST study records cGAN FID 51.94 versus diffusion FID 7.28, with synthetic-only classifier real-test accuracy of 92.97% and 97.25%. Recorded generation time for 10,000 samples is 0.269 versus 255.235 seconds on a T4. These figures describe the saved original experiment, not the newly refactored components.
-
-The fresh 50-epoch cGAN run and the recovered-weight utility evaluation have separate records. Neither recertifies the archived FID or T4 latency results. Full DDPM training has not been repeated in this release; its recovered checkpoint and short training checks have separate scope.
-
-## Run the checks
-
-Python 3.11 or later.
+## Stop and continue
 
 ```sh
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
-python smoke_test.py
-python test_restored_models.py
-python test_resume.py
+python train.py --data /path/to/mnist.npz --model cgan --epochs 10 --output runs/first --device cpu
+python train.py --data /path/to/mnist.npz --model cgan --epochs 50 --resume runs/first/training-state.pt --output runs/continued --device cpu
 ```
 
-See [DATA.md](DATA.md) for input contracts and [VALIDATION.md](VALIDATION.md) for the verification scope. 
+The total target epoch is supplied with `--epochs`; continuation requires identical data, batch, seed, device and Torch version, plus a new output directory. Session state includes models, optimizers and loader/random states. Inference weights cannot resume training. Small CPU fixtures match exactly; **full-data MPS continuation showed numerical drift** despite matching configuration and captured RNG state. [Measured qualification](MPS_REPRODUCIBILITY.md).
 
-## Practical relevance and limitations
-
-FID uses natural-image features and is imperfect for digit images. One seed does not establish generalization or CAPTCHA resistance. The fresh cGAN run repeats the declared training budget on a different runtime; the full archived FID/latency study and full DDPM training remain unreplicated.
-
-No client deployment, commercial outcome, or new live-provider performance is inferred from the component tests.
-
-## Train, stop and continue
-
-CPU is the reference device. Select `--device mps` for an Apple Silicon GPU or `--device cuda` for CUDA. Each resumed session must keep its data, batch size, seed, device and PyTorch version unchanged. `--epochs` is the total target, and each command needs a new empty output directory.
+## Check the implementation
 
 ```sh
-python train.py --data /path/to/mnist.npz --model cgan --epochs 10 --output runs/first --device mps
-python train.py --data /path/to/mnist.npz --model cgan --epochs 50 --resume runs/first/training-state.pt --output runs/continued --device mps
+python run_reproduction.py --profile checks --output runs/checks
 ```
 
-`training-state.pt` contains both networks and optimizers, completed epochs, history, CPU/accelerator random states and shuffled-loader state. Recovered inference weights are not resume checkpoints. The offline continuation test compares full training with a split-and-resumed run for both architectures on generated fixtures; this is not a generation-quality benchmark. CPU/GPU numerical results are not interchangeable.
+The checks protect conditional shapes, bounded generation, adversarial/diffusion gradients, restored architectures, split CPU continuation and complete paired-result accounting. [Validation scope](VALIDATION.md).
+
+## Earlier evidence
+
+The earlier single fresh cGAN run reached 93.28%; recovered cGAN utility reached 93.03%. The archived study reports cGAN/DDPM FID 51.94/7.28 and T4 generation timings. These are separate records. The new six-run comparison and fresh FID protocol do not recertify those historical measurements. [Provenance and comparisons](BENCHMARKS.md).
 
 ## Reuse
 
-Original reproduction and validation tooling is available under MIT; see [LICENSING.md](LICENSING.md) for the explicit file scope and preserved upstream, dataset and checkpoint terms.
+Original tooling has a file-scoped [MIT grant](LICENSING.md). Upstream source credits, datasets and checkpoint terms remain separate. These digit-generation experiments do not establish CAPTCHA resistance or a client deployment.

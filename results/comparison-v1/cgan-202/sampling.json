@@ -1,0 +1,28 @@
+{
+  "model": "cgan",
+  "samples": 10000,
+  "batch_size": 128,
+  "seed": 10202,
+  "chunk_seed": "seed+first output index",
+  "device": "mps",
+  "seconds": 2.186351875003311,
+  "checkpoint_sha256": "d8636b85304cfb0851505d39359cacc7a29b0836f542677d8fd3de424594fd21",
+  "samples_sha256": "2193069c6fdeac612c25d1abfd863817f1ccc9d359a0b8409cf604c008a610a6",
+  "class_counts": [
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000,
+    1000
+  ],
+  "range": [
+    -1.0,
+    1.0
+  ],
+  "torch": "2.14.1"
+}

@@ -1,0 +1,13 @@
+{
+  "model": "cgan",
+  "seed": 202,
+  "source_checkpoint_sha256": "d8636b85304cfb0851505d39359cacc7a29b0836f542677d8fd3de424594fd21",
+  "portable_checkpoint_sha256": "5900567529fccac4e25a2392999f3da44e5985f6a5c1fc63d087456508f5e768",
+  "all_model_tensors_exact": true,
+  "cpu_forward_fixture_exact": true,
+  "fixture_batch": 4,
+  "torch": "2.14.1",
+  "classifier_checkpoint_sha256": "be973ae34e9134aaf0ba52474a6231bb0a282198271e905ea56cfd38c961a8fa",
+  "test_predictions_sha256": "9591149d4026e18cad72d1e6a584bc7fa97a8ba6ac9f542beb8e4534f9bb4c83",
+  "limits": "Inference export, not resumable training state. No bitwise MPS sample-regeneration guarantee."
+}

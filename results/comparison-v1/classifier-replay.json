@@ -1,0 +1,55 @@
+{
+  "records": [
+    {
+      "model": "cgan",
+      "seed": 101,
+      "correct": 9524,
+      "total": 10000,
+      "accuracy": 0.9524,
+      "all_predictions_exact": true
+    },
+    {
+      "model": "cgan",
+      "seed": 202,
+      "correct": 8165,
+      "total": 10000,
+      "accuracy": 0.8165,
+      "all_predictions_exact": true
+    },
+    {
+      "model": "cgan",
+      "seed": 303,
+      "correct": 8287,
+      "total": 10000,
+      "accuracy": 0.8287,
+      "all_predictions_exact": true
+    },
+    {
+      "model": "diffusion",
+      "seed": 101,
+      "correct": 9624,
+      "total": 10000,
+      "accuracy": 0.9624,
+      "all_predictions_exact": true
+    },
+    {
+      "model": "diffusion",
+      "seed": 202,
+      "correct": 9581,
+      "total": 10000,
+      "accuracy": 0.9581,
+      "all_predictions_exact": true
+    },
+    {
+      "model": "diffusion",
+      "seed": 303,
+      "correct": 9652,
+      "total": 10000,
+      "accuracy": 0.9652,
+      "all_predictions_exact": true
+    }
+  ],
+  "torch": "2.14.1",
+  "device": "cpu",
+  "scope": "Re-evaluation of six saved synthetic-trained classifiers on canonical real-test images. No generator/classifier retraining, sample regeneration or FID repetition."
+}

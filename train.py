@@ -1,4 +1,4 @@
-"""Train or exactly resume the original MLP cGAN / residual U-Net DDPM."""
+"""Train or continue the original MLP cGAN / residual U-Net DDPM."""
 import os
 os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG', ':4096:8')
 import argparse

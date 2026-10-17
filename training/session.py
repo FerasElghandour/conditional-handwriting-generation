@@ -1,4 +1,4 @@
-"""Fresh or exactly resumed original-architecture generator training.
+"""Fresh or state-restored original-architecture generator training.
 
 The session state binds data/configuration and both optimizer and RNG states.
 Published recovered inference weights are not continuation checkpoints.

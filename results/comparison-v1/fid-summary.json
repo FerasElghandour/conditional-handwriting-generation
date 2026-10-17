@@ -1,0 +1,79 @@
+{
+  "models": {
+    "cgan": {
+      "n": 3,
+      "mean": 81.28462473551433,
+      "median": 97.4300765991211,
+      "sample_sd": 30.20881467349962
+    },
+    "diffusion": {
+      "n": 3,
+      "mean": 17.359607060750324,
+      "median": 17.914390563964844,
+      "sample_sd": 1.1354680252876594
+    }
+  },
+  "records": [
+    {
+      "model": "cgan",
+      "seed": 101,
+      "fid_2048": 46.433815002441406,
+      "real_samples": 5000,
+      "fake_samples": 5000,
+      "sample_archive_sha256": "ad6cac5c73c0044b044deaff2fcbc411a214ae441d31f53c1450cc62d4fe0714",
+      "checkpoint_sha256": "5436e0b64a34465c2f893ac2a399c2feb2e23d6ae8987df52b3f6f2c56696d11",
+      "wall_seconds": 23.84943041600127
+    },
+    {
+      "model": "cgan",
+      "seed": 202,
+      "fid_2048": 97.4300765991211,
+      "real_samples": 5000,
+      "fake_samples": 5000,
+      "sample_archive_sha256": "2193069c6fdeac612c25d1abfd863817f1ccc9d359a0b8409cf604c008a610a6",
+      "checkpoint_sha256": "d8636b85304cfb0851505d39359cacc7a29b0836f542677d8fd3de424594fd21",
+      "wall_seconds": 22.524322457997187
+    },
+    {
+      "model": "cgan",
+      "seed": 303,
+      "fid_2048": 99.98998260498047,
+      "real_samples": 5000,
+      "fake_samples": 5000,
+      "sample_archive_sha256": "57cd1ca27e46930bef5cf0eaabda58de33c217235164f0578425e171dc59fac9",
+      "checkpoint_sha256": "241a46feacd30125bcf57aacd5b3d997fd57e406add1aad7fe0ae009cb74b3b6",
+      "wall_seconds": 22.096539624999423
+    },
+    {
+      "model": "diffusion",
+      "seed": 101,
+      "fid_2048": 18.111024856567383,
+      "real_samples": 5000,
+      "fake_samples": 5000,
+      "sample_archive_sha256": "ce7a1762eb36eabe4db62dd2c34ed93b8ccc6dd9a413706d16b5aebb73ca6059",
+      "checkpoint_sha256": "877050929ea511686101f12ddfc92f2f1b637ad17c4ff7b85a41ec39e7f5474d",
+      "wall_seconds": 21.162871125001402
+    },
+    {
+      "model": "diffusion",
+      "seed": 202,
+      "fid_2048": 16.05340576171875,
+      "real_samples": 5000,
+      "fake_samples": 5000,
+      "sample_archive_sha256": "e002aa5923ccaa2c4bdf80cdc74975ea8553113fc75acc665c2319a622bc2519",
+      "checkpoint_sha256": "54f988245fa7b1b5b961a08b0919b34af2fb0c335f00192f03668550e6a1017e",
+      "wall_seconds": 21.734727791001205
+    },
+    {
+      "model": "diffusion",
+      "seed": 303,
+      "fid_2048": 17.914390563964844,
+      "real_samples": 5000,
+      "fake_samples": 5000,
+      "sample_archive_sha256": "d737cb0b216e82500e8f396f0802ca4c4e610e33dfb1f94231fe2231c5d584af",
+      "checkpoint_sha256": "6bb5626d6acdc77df25512ca286c954101c5f202792defc16876f29e0471ef99",
+      "wall_seconds": 16.885475583003426
+    }
+  ],
+  "limits": "This is a new protocol, not a reproduction of archived FID or T4 latency. Inception features were developed for natural RGB images and have limitations for MNIST. Finite-sample FID is biased and three seeds support descriptive comparisons only. Generator training budgets/devices differ, so this is not a compute-matched efficiency result."
+}

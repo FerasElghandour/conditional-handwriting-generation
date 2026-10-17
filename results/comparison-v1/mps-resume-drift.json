@@ -1,0 +1,46 @@
+{
+  "different_tensors": 95,
+  "tensors": 95,
+  "maximum_absolute_parameter_difference": 0.0003914441913366318,
+  "maximum_tensor_relative_l2_difference": 0.0031947019166193424,
+  "uninterrupted_last_loss": 0.04298670370227251,
+  "resumed_last_loss": 0.04297717119384016,
+  "largest_differences": [
+    {
+      "tensor": "unet/time_mlp.0.weight",
+      "max_abs": 0.0003914441913366318,
+      "relative_l2": 0.0006287450304607549,
+      "exact": false
+    },
+    {
+      "tensor": "unet/time_mlp.2.weight",
+      "max_abs": 0.00036242976784706116,
+      "relative_l2": 0.0004467105159562935,
+      "exact": false
+    },
+    {
+      "tensor": "unet/down3.conv1.weight",
+      "max_abs": 0.0002772621810436249,
+      "relative_l2": 0.001454221400510523,
+      "exact": false
+    },
+    {
+      "tensor": "unet/mid.conv1.weight",
+      "max_abs": 0.00026573799550533295,
+      "relative_l2": 0.002146344138575643,
+      "exact": false
+    },
+    {
+      "tensor": "unet/up3.conv1.weight",
+      "max_abs": 0.00024474156089127064,
+      "relative_l2": 0.0018394673163250655,
+      "exact": false
+    },
+    {
+      "tensor": "unet/mid.time_emb.weight",
+      "max_abs": 0.0002281833440065384,
+      "relative_l2": 0.0004265685958546744,
+      "exact": false
+    }
+  ]
+}

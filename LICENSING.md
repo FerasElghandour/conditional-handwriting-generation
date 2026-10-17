@@ -9,6 +9,14 @@ The root [MIT license](LICENSE) covers the original implementation and documenta
 - `training/session.py`
 - `train.py`
 - `test_resume.py`
+- `comparison.py`
+- `COMPARISON_PROTOCOL.json`
+- `test_comparison.py`
+- `fid_comparison.py`
+- `FID_PROTOCOL.json`
+- `verify_comparison.py`
+- `VALIDATION.md`
+- `MPS_REPRODUCIBILITY.md`
 
 This grant covers these original contributions only. It does not relicense third-party source, dependencies, legacy notebooks, imported assets, environment binaries, datasets or model checkpoints. Existing copyright notices, attribution and upstream terms remain in effect. Files outside the list require checking their existing provenance and terms before reuse; this release asserts no new rights over them.
 

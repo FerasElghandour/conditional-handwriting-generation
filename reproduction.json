@@ -15,6 +15,10 @@
         [
           "{python}",
           "test_resume.py"
+        ],
+        [
+          "{python}",
+          "test_comparison.py"
         ]
       ]
     },
@@ -130,6 +134,40 @@
           "{input:session}",
           "--output",
           "{output}/continued"
+        ]
+      ]
+    },
+    "paired-comparison": {
+      "scope": "Fixed three-seed M2 Max reference: cGAN50 CPU, DDPM40 MPS,10000 balanced samples and20-epoch CPU classifiers; all seeds retained; hardware budgets differ",
+      "required_inputs": [
+        "mnist"
+      ],
+      "commands": [
+        [
+          "{python}",
+          "comparison.py",
+          "--data",
+          "{input:mnist}",
+          "--out",
+          "{output}/comparison"
+        ]
+      ]
+    },
+    "replay-comparison": {
+      "scope": "Reload the six saved synthetic-trained classifiers and reproduce all 60000 real-test predictions/confusion matrices in the CPU reference; no retraining or synthetic regeneration",
+      "required_inputs": [
+        "mnist"
+      ],
+      "commands": [
+        [
+          "{python}",
+          "verify_comparison.py",
+          "--data",
+          "{input:mnist}",
+          "--results",
+          "results/comparison-v1",
+          "--output",
+          "{output}/classifier-replay.json"
         ]
       ]
     }

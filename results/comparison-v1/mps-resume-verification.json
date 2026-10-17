@@ -1,0 +1,17 @@
+{
+  "model": "diffusion",
+  "checkpoint_epoch": 35,
+  "resumed_target_epoch": 36,
+  "rows_per_epoch": 59904,
+  "device": "mps",
+  "seed": 202,
+  "checks": {
+    "models": false,
+    "optimizers": false,
+    "rng": true,
+    "contract": true,
+    "completed_epochs": true,
+    "history_excluding_wall_time": false
+  },
+  "scope": "One real full-MNIST continuation epoch on the M2 Max, compared with the concurrently running uninterrupted reference. Not cross-device equality or every possible checkpoint."
+}

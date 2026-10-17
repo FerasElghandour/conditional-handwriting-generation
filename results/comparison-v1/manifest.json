@@ -1,0 +1,66 @@
+{
+  "protocol": {
+    "name": "mnist-generative-comparison-v1",
+    "declared_date": "2026-10-17",
+    "source_base_commit": "ed98aae1b23b88288002d21ef21f443b814435c5",
+    "seeds": [
+      101,
+      202,
+      303
+    ],
+    "models": {
+      "cgan": {
+        "epochs": 50,
+        "batch_size": 128,
+        "device": "cpu"
+      },
+      "diffusion": {
+        "epochs": 40,
+        "batch_size": 512,
+        "device": "mps"
+      }
+    },
+    "data_sha256": "731c5ac602752760c8e48fbffcf8c3b850d9dc2a2aedcf2cc48468fc17b673d1",
+    "data": "canonical MNIST: 60000 training and 10000 test images; final partial generator batches dropped",
+    "sampling": {
+      "count": 10000,
+      "batch_size": 128,
+      "device": "mps",
+      "labels": "balanced cyclic 0 through 9",
+      "seed_offset": 10000,
+      "chunk_seed": "sampling seed plus first output index"
+    },
+    "classifier": {
+      "epochs": 20,
+      "device": "cpu",
+      "seed_offset": 20000,
+      "training": "10000 synthetic images only; same classifier initialization and batch-order seed for each paired generator seed"
+    },
+    "selection": "final fixed-budget generator checkpoint; no test-based model, epoch or seed selection",
+    "endpoint": "synthetic-only classifier accuracy on the fixed real MNIST test split; per-class recall and confusion matrices",
+    "analysis": "report all three complete pipeline seed pairs, arithmetic mean, median, sample SD and paired differences; no significance or universal superiority claim from n=3",
+    "limits": "Locally frozen before new training. Same data, sample count and classifier protocol; generator epochs, batch sizes, optimizer rules, devices and compute budgets differ and are reported. This is not a compute-matched efficiency comparison. Test split and earlier results were known before this follow-up. Inception FID and archived T4 latency are outside this campaign."
+  },
+  "source_sha256": {
+    "train.py": "30407d0739e54ed7c0457b1da4a41c8ef6cf680cacb3358e05f0efe8e918af83",
+    "evaluate.py": "9aec39100fcd946d45749262a26cf3cb20f5e1105bb0244bdbc87dbb46860a19",
+    "comparison.py": "293ff38c1e108d63d766d2f6a224213b66d33611736549baaee012bba89a8473",
+    "COMPARISON_PROTOCOL.json": "97a7095ad568484126a9c651e338e527f39b34331e682130d4b1666ac9740b26",
+    "model/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "model/cgan.py": "e8a37f2e3c17bc528f01afa7dfaf8bac5b6d870de6b05be6f80d0905aa534c8c",
+    "model/diffusion.py": "5646cf9a4eb0a145f7261f94120477df62c0c2e96756d4dc414d1a6f6dd7aaa5",
+    "training/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "training/session.py": "664046110138d92b6543a62d250a4bcbe0f40d991f17ea51b05d6f00af4d368f",
+    "training/train_cgan.py": "0cab2ad4061dfe7f7537853ca96fda955071ddb57cd5e33d70b9b340f846769f",
+    "training/train_diffusion.py": "d37c2df4e0af9a87d188cde1595365567187f7cee8019ac82b23a3c32110be8a",
+    "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "utils/checkpoint.py": "d7f1e3f434fd35dcd0cc4f440dffb4a9fa1d6f0997f506f211121e12dcc78565",
+    "utils/metrics.py": "8e4653c22720b94c40d6a703f1d65e9a452174973084aa1f85b0f85fe7303442",
+    "utils/visualize.py": "9ae57b02f8805bf54c26e2612acd556ddd354376946799bd1e5683d18dc5adc7"
+  },
+  "data_sha256": "731c5ac602752760c8e48fbffcf8c3b850d9dc2a2aedcf2cc48468fc17b673d1",
+  "started_unix": 1792274667.221226,
+  "python": "3.14.3",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "torch": "2.14.1"
+}
