@@ -63,7 +63,7 @@ def sample_images(model, device, num_samples=16, num_classes=10, img_size=(1,28,
     return images, labels
 
 def train_diffusion(model, dataloader, device, num_classes, timesteps=200, epochs=40, lr=1e-4,
-                    schedule="cosine", checkpoint_dir="checkpoints", optimizer=None, start_epoch=0, history=None):
+                    schedule="cosine", checkpoint_dir="checkpoints", optimizer=None, start_epoch=0, history=None, checkpoint_callback=None, seed=42):
     optimizer = optimizer or torch.optim.Adam(model.parameters(), lr=lr)
     abar = make_schedule(timesteps, schedule, device)[2]
     model.train(); history = list(history or [])
@@ -89,9 +89,11 @@ def train_diffusion(model, dataloader, device, num_classes, timesteps=200, epoch
         print(f"DDPM epoch {epoch+1}: MSE={record['loss']:.6f}, n={count}, {record['seconds']:.1f}s",flush=True)
         metadata = {"completed_epochs":epoch+1,"timesteps":timesteps,"schedule":schedule,
                     "base_channels":model.down1.conv1.out_channels,"time_dim":model.time_mlp[0].in_features,
-                    "num_classes":num_classes,"history":history,"seed":42}
+                    "num_classes":num_classes,"history":history,"seed":seed}
         save_checkpoint(model,optimizer,"latest",record['loss'],"diffusion_unet",checkpoint_dir,metadata)
         if (epoch+1)%5 == 0:
             save_checkpoint(model,optimizer,epoch+1,record['loss'],"diffusion_unet",checkpoint_dir,metadata)
+        if checkpoint_callback is not None:
+            checkpoint_callback(history)
     save_checkpoint(model,optimizer,"final",history[-1]['loss'],"diffusion_unet",checkpoint_dir,metadata)
     return history

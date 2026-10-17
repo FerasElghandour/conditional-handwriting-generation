@@ -41,5 +41,11 @@
       "path": "utils/visualize.py",
       "source_sha256": "9ae57b02f8805bf54c26e2612acd556ddd354376946799bd1e5683d18dc5adc7"
     }
-  ]
+  ],
+  "hash_scope": "source_sha256 records the recovered baseline, not a hash of the current extended training files",
+  "extensions": {
+    "training/train_cgan.py": "optional per-epoch full-session callback",
+    "training/train_diffusion.py": "optional per-epoch full-session callback",
+    "training/session.py": "configuration-bound model, optimizer, loader and RNG continuation"
+  }
 }

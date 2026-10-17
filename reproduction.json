@@ -11,6 +11,10 @@
         [
           "{python}",
           "test_restored_models.py"
+        ],
+        [
+          "{python}",
+          "test_resume.py"
         ]
       ]
     },

@@ -5,7 +5,7 @@ from utils.checkpoint import save_checkpoint
 
 def train_cgan(generator, discriminator, dataloader, optimizer_G, optimizer_D,
                criterion, device, z_dim, num_classes, epochs=50, checkpoint_dir="checkpoints",
-               start_epoch=0, history=None):
+               start_epoch=0, history=None, checkpoint_callback=None, seed=42):
     generator.train(); discriminator.train()
     history = list(history or [])
     for epoch in range(start_epoch, epochs):
@@ -41,13 +41,15 @@ def train_cgan(generator, discriminator, dataloader, optimizer_G, optimizer_D,
                   "examples": count, "seconds": time.perf_counter()-started}
         history.append(record)
         print(f"cGAN {epoch+1}/{epochs}: D={record['d_loss']:.5f}, G={record['g_loss']:.5f}, n={count}, {record['seconds']:.1f}s", flush=True)
-        metadata = {"z_dim": z_dim, "num_classes": num_classes, "history": history, "seed":42}
+        metadata = {"z_dim": z_dim, "num_classes": num_classes, "history": history, "seed":seed}
         # Latest checkpoints permit recovery; numbered snapshots every ten epochs.
         for model, optimizer, name, loss in [(generator,optimizer_G,"cgan_generator",record['g_loss']),
                                             (discriminator,optimizer_D,"cgan_discriminator",record['d_loss'])]:
             save_checkpoint(model, optimizer, "latest", loss, name, checkpoint_dir, metadata | {"completed_epochs":epoch+1})
             if (epoch+1) % 10 == 0:
                 save_checkpoint(model, optimizer, epoch+1, loss, name, checkpoint_dir, metadata)
+        if checkpoint_callback is not None:
+            checkpoint_callback(history)
     save_checkpoint(generator, optimizer_G, "final", history[-1]['g_loss'], "cgan_generator", checkpoint_dir, metadata)
     save_checkpoint(discriminator, optimizer_D, "final", history[-1]['d_loss'], "cgan_discriminator", checkpoint_dir, metadata)
     return history
