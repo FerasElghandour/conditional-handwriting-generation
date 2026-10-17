@@ -12,11 +12,15 @@ The headline cGAN uses fully connected layers with learned class embeddings. The
 
 ## Train and sample generative models
 
-Complete original **MLP cGAN** and **residual U-Net DDPM** training/sampling paths are restored with strictly compatible retained checkpoints. A fresh classifier trained only on 10,000 cGAN samples reaches **93.03% on 10,000 real MNIST test images** under the declared 20-epoch utility protocol.
+A fresh **50-epoch MLP cGAN** run produces samples that train a classifier to **93.28% accuracy on 10,000 real MNIST test images**. The classifier sees only 10,000 synthetic training images and trains for 20 epochs. Original MLP cGAN and residual U-Net DDPM training/sampling paths also retain compatible recovered checkpoints.
+
+![Actual samples from the fresh 50-epoch cGAN; columns correspond to digits 0–9](results/fresh-cgan/grid.png)
+
+[Fresh training, utility metrics and checkpoint provenance](results/fresh-cgan/protocol.json). One generator seed and one classifier seed do not establish superiority. The separate recovered-cGAN utility result remains **93.03%**.
 
 [Commands, artifacts and benchmark scope](BENCHMARKS.md) · [Versioned profiles](reproduction.json)
 
-Recovered cGAN checkpoint, class-conditioned rows 0–9:
+Recovered cGAN checkpoint, class-conditioned columns 0–9:
 
 ![Actual class-conditioned samples from the recovered cGAN](results/recovered-cgan/grid.png)
 
@@ -47,7 +51,7 @@ Observed output from this run:
 
 The completed MNIST study records cGAN FID 51.94 versus diffusion FID 7.28, with synthetic-only classifier real-test accuracy of 92.97% and 97.25%. Recorded generation time for 10,000 samples is 0.269 versus 255.235 seconds on a T4. These figures describe the saved original experiment, not the newly refactored components.
 
-Recovered weights, original architecture training paths and compact examples have separate scopes. The fresh 93.03% classifier utility result evaluates recovered cGAN samples. It does not repeat the archived end-to-end generator training or recertify its FID results.
+The fresh 50-epoch cGAN run and the recovered-weight utility evaluation have separate records. Neither recertifies the archived FID or T4 latency results. Full DDPM training has not been repeated in this release; its recovered checkpoint and short training checks have separate scope.
 
 ## Run the checks
 
@@ -66,7 +70,7 @@ See [DATA.md](DATA.md) for input contracts and [VALIDATION.md](VALIDATION.md) fo
 
 ## Practical relevance and limitations
 
-FID uses natural-image features and is imperfect for digit images. One seed does not establish generalization or CAPTCHA resistance. The standalone component edition is not a new reproduction of the full archived training run.
+FID uses natural-image features and is imperfect for digit images. One seed does not establish generalization or CAPTCHA resistance. The fresh cGAN run repeats the declared training budget on a different runtime; the full archived FID/latency study and full DDPM training remain unreplicated.
 
 No client deployment, commercial outcome, or new live-provider performance is inferred from the component tests.
 

@@ -19,7 +19,7 @@
       ]
     },
     "train-cgan": {
-      "scope": "Original MLP cGAN training on canonical MNIST; fresh50epoch run, not historical checkpoint evaluation",
+      "scope": "Full original MLP cGAN training on canonical MNIST: 50 epochs, seed 42, batch 128, CPU; completed fresh in this release",
       "required_inputs": [
         "mnist"
       ],
@@ -34,12 +34,18 @@
           "--epochs",
           "50",
           "--output",
-          "{output}/cgan"
+          "{output}/cgan",
+          "--batch-size",
+          "128",
+          "--seed",
+          "42",
+          "--device",
+          "cpu"
         ]
       ]
     },
     "train-diffusion": {
-      "scope": "Original residual U-Net DDPM training on canonical MNIST;40epochs",
+      "scope": "Original residual U-Net DDPM training on canonical MNIST; 40 epochs",
       "required_inputs": [
         "mnist"
       ],
@@ -54,7 +60,76 @@
           "--epochs",
           "40",
           "--output",
-          "{output}/diffusion"
+          "{output}/diffusion",
+          "--batch-size",
+          "128",
+          "--seed",
+          "42",
+          "--device",
+          "cpu"
+        ]
+      ]
+    },
+    "evaluate-fresh-cgan": {
+      "scope": "Published fresh 50-epoch cGAN weights; 10,000 synthetic samples; 20-epoch synthetic-only classifier; 10,000 real test images; no generator retraining",
+      "required_inputs": [
+        "mnist"
+      ],
+      "commands": [
+        [
+          "{python}",
+          "sample.py",
+          "--model",
+          "cgan",
+          "--checkpoint",
+          "checkpoints/cgan_fresh50.pt",
+          "--samples",
+          "10000",
+          "--seed",
+          "42",
+          "--output",
+          "{output}/samples"
+        ],
+        [
+          "{python}",
+          "evaluate.py",
+          "--data",
+          "{input:mnist}",
+          "--samples",
+          "{output}/samples/samples.npz",
+          "--epochs",
+          "20",
+          "--output",
+          "{output}/utility"
+        ]
+      ]
+    },
+    "resume-cgan": {
+      "scope": "Continue a compatible CPU training-state session to a total of 50 epochs; identical data/batch/seed/runtime required",
+      "required_inputs": [
+        "mnist",
+        "session"
+      ],
+      "commands": [
+        [
+          "{python}",
+          "train.py",
+          "--data",
+          "{input:mnist}",
+          "--model",
+          "cgan",
+          "--epochs",
+          "50",
+          "--batch-size",
+          "128",
+          "--seed",
+          "42",
+          "--device",
+          "cpu",
+          "--resume",
+          "{input:session}",
+          "--output",
+          "{output}/continued"
         ]
       ]
     }

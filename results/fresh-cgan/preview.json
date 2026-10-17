@@ -1,0 +1,17 @@
+{
+  "model": "cgan",
+  "samples": 100,
+  "seed": 42,
+  "checkpoint_sha256": "2db41066823741ba1ad7ebbcbd4350cddc2bb655b9185f9252de7d15717c9f3f",
+  "shape": [
+    100,
+    1,
+    28,
+    28
+  ],
+  "finite": true,
+  "range": [
+    -1.0,
+    1.0
+  ]
+}
